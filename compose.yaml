@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  mysql:
+    image: mysql:5.7
+    hostname: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysql
+      - MYSQL_DATABASE=simpview
+    volumes:
+      - ./initdb.d/:/docker-entrypoint-initdb.d/
+    ports:
+      - 3306:3306
+    networks:
+      - default
+  php:
+    image: vutiendat3601/simpview:1.0.0
+#    build: .
+    ports:
+      - '80:80'
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - default
+  
+networks:
+  default:
+    name: simpview
+    driver: bridge
